@@ -1,0 +1,33 @@
+
+{% if mapping.displayId %}
+<th>
+   Id
+</th>
+ {% endif %}
+{% for title in mapping.table_header %}
+<th>
+
+    {{mapping.header_trans[_locale][loop.index - 1]}}
+
+    {% if title in mapping.orderBy %}
+    <div class="elparici_entity_search_reorders" data-row="{{title}}" data-order-by="DESC">
+        <i class="filter-button fa fa-caret-down elparici_entity_search_reorder updateTable elparici_entity_search_active" data-order-by="DESC"  title="DESC" ></i>
+        <i class="filter-button fa fa-caret-up elparici_entity_search_reorder updateTable" data-order-by="ASC" title="ASC"></i>
+    </div>
+    {% endif %}
+    {% if  mapping.choices[title] is defined %}
+         <li class="nav-item dropdown show">
+             <a href="#" data-target="#" class="nav-link" data-toggle="dropdown" aria-expanded="true"><i class="filter-button fa fa-caret-down"></i></a>
+             <div class="dropdown-menu dropdown-menu-arrow elparici_entity_search_choices" x-placement="bottom-start" >
+                {% for text, param in attribute(mapping.choices, title) %}
+                     <a href="#" data-row="{{title}}" data-value="{{param}}" class="dropdown-item updateTable elparici_entity_search_choice ">
+                        {{text}} <span class="float-right"><input type="checkbox" name="" checked></span>
+                    </a>
+                {% endfor %}
+             </div>
+         </li>
+    {% endif %}
+</th>
+{% endfor %}
+<th>
+</th>

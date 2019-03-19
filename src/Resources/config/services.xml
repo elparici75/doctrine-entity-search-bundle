@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+		<service id="elparici_entity_search.utils.fake_repo" class="Elparici\EntitySearchBundle\Utils\FakeRepo">
+			<argument type="service" id="doctrine.orm.default_entity_manager" />
+			<argument type="service" id="elparici_entity_search.utils.pager" />
+            <argument type="service" id="elparici_entity_search.utils.handler" />
+            <argument type="service" id="security.token_storage" />
+        </service>
+        <service id="Elparici\EntitySearchBundle\Utils\FakeRepo" alias="elparici_entity_search.utils.fake_repo"/>
+
+        <service id="elparici_entity_search.utils.pager" class="Elparici\EntitySearchBundle\Utils\Pager">
+        	<argument type="service" id="twig" />
+        </service>
+        <service id="Elparici\EntitySearchBundle\Utils\Pager" alias="elparici_entity_search.utils.pager"/>
+
+        <service id="elparici_entity_search.utils.handler" class="Elparici\EntitySearchBundle\Utils\Handler">
+            <argument type="service" id="twig" />
+        </service>
+        <service id="Elparici\EntitySearchBundle\Utils\Handler" alias="elparici_entity_search.utils.handler"/>
+
+        <service id="elparici_entity_search.controller.entity_search_controller" class="Elparici\EntitySearchBundle\Controller\EntitySearchController">
+			
+        </service>
+
+    </services>
+</container>

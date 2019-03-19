@@ -1,0 +1,32 @@
+
+<div class="row row-cards no-gutters row-deck">
+    <div class="col-12 no-padding">
+        <div class="card">
+            {% if header|default(false) %}
+            <div class="card-header">
+                <h3 class="card-title">
+                    {{ header }}
+                </h3>
+                <div class="card-options">
+                    {% block card_options %}{% endblock %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                        <thead>
+                            <tr id="elparici_entity_search_header">
+                            </tr>
+                        </thead>
+                        <tbody id="elparici_entity_search_results">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="paginator-nav"></div>
+            </div>
+        </div>
+    </div>
+</div>

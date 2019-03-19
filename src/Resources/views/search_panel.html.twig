@@ -1,0 +1,17 @@
+
+{% trans_default_domain 'search' %}
+<section class="row no-gutters justify-content-center" id="elparici-search-table" data-route="admin_search_by_params" data-locale="{{app.request.locale}}">
+    <div class="col-12">
+        <form>
+            <div class="form-group" style="position:relative;">
+                <input class="col-12 text-center" data-entity-mapping="{{data_mapping}}" id="elparici_entity_search_searchField" name="" placeholder="{{'pleaseType'|trans}}" type="text"/>
+                <div class="btn" id="elparici_entity_search_flush" title="{{'deleteAll'|trans}}"><i class="fa fa-times"></i></div>
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid" style="padding:0;min-height:50vh;">
+        <div class="spinner" id="elparici_entity_search_loader">
+        </div>
+        {% include '@entity_search_bundle/table-container.html.twig'%}
+    </div>
+</section>

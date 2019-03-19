@@ -1,0 +1,16 @@
+{
+  "name": "elparici/entity-search",
+  "license": "MIT",
+  "type": "library",
+  "description": "Entity Search Bundle",
+  "autoload": {
+    "psr-0": {
+      "Elparici\\EntitySearchBundle": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "symfony/symfony": "4.*"
+  },
+  "minimum-stability": "stable"
+}

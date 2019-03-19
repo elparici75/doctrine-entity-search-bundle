@@ -1,0 +1,77 @@
+{% trans_default_domain 'search' %}
+
+    {% for entity in pagination %}
+
+        <tr>
+            {% if mapping.displayId %}
+            <td>
+                {{ entity.id }}
+            </td>
+            {% endif %}
+            {% for title in mapping.table_header %}
+                {% set output = '' %}
+            <td {% if attribute(entity, title) is null %}class="text-center"{% endif %}>    
+                    {#CASE IS SUBSTITUTION#}
+                    {% if attribute(mapping.substitutes, title) is defined %}
+                        {% set template = attribute(mapping.substitutes, title) %}
+                            {% include template with {
+                            'value': attribute(entity, title),
+                            'entity': entity
+                        }%}
+                    {% else %}
+                    {#CASE NO SUBSTITUTION#}
+                        {#CASE DATE ENTRY #}
+                        {% if attribute(entity, title).setTimestamp is defined %}
+
+                            {% if title in mapping.ago %}
+                                    {{attribute(entity, title)|ago}}
+                            {% else %}
+                                  {{attribute(entity, title)|date('d/m/Y')}}
+                            {% endif %}
+                          
+                        {#CASE OTHER ENTRIES #}
+                        {% else %}
+                            {% if title in mapping.bool %}
+                                <span class="tag tag-{{ attribute(entity, title) ? 'green' : 'gray' }}">{{ attribute(entity, title) ? 'active' : 'inactive' }}</span>
+                            {% elseif attribute(mapping.innerJoin, title) is defined %}
+                                {% set child = attribute(entity, title) %}
+                                {% set childKey = attribute(mapping.innerJoin, title) %}
+                                {{ attribute(child, childKey)}}
+                             
+                            {% else %}
+                                {# CASE IS NULL #}
+                                    {% if attribute(entity, title) is null %}
+                                        <i class="fe fe-alert-octagon text-info"></i>
+                                    {% else %}
+                                  {# CASE IS NOT NULL #}
+                                        {{attribute(entity, title)}}
+                                  {% endif %}
+                             {% endif %}
+                        {% endif %}
+                    {% endif %}
+            </td>                 
+            {% endfor %}
+            <td>
+                {% include mapping.actions_template with {'entity': entity}%}
+            </td>
+        </tr>
+{% else %}
+<tr class="text-center">
+    <!-- here we increment the value with 2 as we count the default id + actions cols -->
+    <td colspan="{{mapping.table_header|length + 2}}" class="text-center">
+       <h1 style="margin-top:15vh;" class="text-muted">{{'oops'|trans}}</h1>
+       <p>{{'searchFieldsIntro'|trans}}: <br>
+            {% for item in mapping.likables %}
+                <div class="badge badge-info"> {{item}}</div>
+            {% endfor %}
+            {% for entity,field in mapping.innerJoin %}
+                <div class="badge badge-info">{{entity}}</div>
+            {% endfor %}
+
+       </p>
+    </td>
+</tr>
+{% endfor %}
+
+
+
